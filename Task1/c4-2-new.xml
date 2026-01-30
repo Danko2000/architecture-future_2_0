@@ -1,0 +1,109 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.0.0 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" version="24.0.0">
+  <diagram id="C4-Architecture-Updated" name="To-Be Architecture v2">
+    <mxGraphModel dx="1434" dy="844" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="actor_analyst" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="Бизнес-аналитик" vertex="1">
+          <mxGeometry height="60" width="30" x="60" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="actor_doc" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="Врач / Оператор" vertex="1">
+          <mxGeometry height="60" width="30" x="780" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="cloud_boundary" parent="1" style="swimlane;html=1;startSize=20;horizontal=1;container=1;collapsible=0;rounded=0;dashed=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Облачная Платформа &quot;Будущее 2.0&quot; (AWS/Azure/Yandex)" vertex="1">
+          <mxGeometry height="540" width="840" x="20" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="bi_portal" parent="cloud_boundary" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="BI Portal&#xa;[Container: Superset/PowerBI]" vertex="1">
+          <mxGeometry height="60" width="160" x="20" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="data_mart" parent="cloud_boundary" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#d5e8d4;strokeColor=#82b366;" value="Витрина Данных&#xa;[Container: ClickHouse]" vertex="1">
+          <mxGeometry height="80" width="120" x="40" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="airflow" parent="cloud_boundary" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="Orchestrator (Batch)&#xa;[Container: Apache Airflow]&#xa;&#xa;Ночные пересчеты, тяжелый ETL" vertex="1">
+          <mxGeometry height="80" width="160" x="20" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="data_lake" parent="cloud_boundary" style="shape=cloud;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" value="Data Lake (S3)&#xa;[Container: Object Storage]&#xa;&#xa;Raw / Silver / Gold" vertex="1">
+          <mxGeometry height="120" width="200" x="280" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="esb_layer" parent="cloud_boundary" style="swimlane;html=1;startSize=20;horizontal=1;container=0;collapsible=0;rounded=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Integration &amp; Streaming Layer" vertex="1">
+          <mxGeometry height="140" width="360" x="250" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="kafka" parent="esb_layer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Event Bus&#xa;[Apache Kafka]" vertex="1">
+          <mxGeometry height="50" width="320" x="20" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="camel" parent="esb_layer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Integration Logic / FLC&#xa;[Apache Camel / K-Connect]" vertex="1">
+          <mxGeometry height="40" width="320" x="20" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="fin_service" parent="cloud_boundary" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="Финтех Сервисы&#xa;[Microservices: Go/Java]" vertex="1">
+          <mxGeometry height="60" width="160" x="660" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="ai_service" parent="cloud_boundary" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="ИИ Сервисы&#xa;[Container: Python/GPU]" vertex="1">
+          <mxGeometry height="60" width="160" x="660" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="legacy_boundary" parent="1" style="swimlane;html=1;startSize=20;horizontal=1;container=1;collapsible=0;rounded=0;dashed=1;fillColor=#f5f5f5;strokeColor=#666666;" value="Legacy Zone (On-Premise)" vertex="1">
+          <mxGeometry height="160" width="840" x="20" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="legacy_dwh" parent="legacy_boundary" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#f8cecc;strokeColor=#b85450;" value="Legacy DWH&#xa;[SQL Server 2008]&#xa;&#xa;Хранение мед.карт" vertex="1">
+          <mxGeometry height="80" width="140" x="350" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="legacy_app" parent="legacy_boundary" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="Медицинская Система&#xa;[PowerBuilder]" vertex="1">
+          <mxGeometry height="60" width="140" x="670" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_analyst" parent="1" source="actor_analyst" target="bi_portal" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_doc" parent="1" source="actor_doc" target="legacy_app" edge="1">
+          <mxGeometry relative="1" as="geometry">
+             <Array as="points">
+              <mxPoint x="795" y="700" />
+              <mxPoint x="760" y="700" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_bi_dm" parent="1" source="bi_portal" target="data_mart" edge="1" value="SQL">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_airflow_dm" parent="1" source="airflow" target="data_mart" edge="1" value="Load">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="180" y="590" as="sourcePoint"/>
+            <mxPoint x="180" y="430" as="targetPoint"/>
+            <Array as="points">
+              <mxPoint x="100" y="630" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_airflow_s3" parent="1" source="airflow" target="data_lake" edge="1" value="Manage">
+          <mxGeometry relative="1" as="geometry">
+             <Array as="points">
+              <mxPoint x="240" y="630" />
+              <mxPoint x="240" y="100" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_legacy_to_camel" parent="1" source="legacy_dwh" target="camel" edge="1" value="CDC / Polling">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_camel_kafka" parent="1" source="camel" target="kafka" edge="1" value="Publish">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_kafka_s3" parent="1" source="kafka" target="data_lake" edge="1" value="Sink (Archiving)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_kafka_fin" parent="1" source="kafka" target="fin_service" edge="1" value="Events">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+         <mxCell id="edge_kafka_ai" parent="1" source="kafka" target="ai_service" edge="1" value="Stream">
+          <mxGeometry relative="1" as="geometry">
+             <Array as="points">
+              <mxPoint x="600" y="275" />
+              <mxPoint x="600" y="130" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_legacy_write" parent="1" source="legacy_app" target="legacy_dwh" edge="1" value="OLTP">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,68 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.2.9 Chrome/140.0.7339.249 Electron/38.7.2 Safari/537.36" version="29.2.9">
+  <diagram id="TF-Deployment-YC" name="Yandex Cloud Deployment">
+    <mxGraphModel dx="1098" dy="849" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="legend_grp" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="80" width="200" x="40" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_tf" parent="legend_grp" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Terraform Managed" vertex="1">
+          <mxGeometry height="30" width="140" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_man" parent="legend_grp" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="Manual / Legacy" vertex="1">
+          <mxGeometry height="30" width="140" y="40" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="cloud_zone" parent="1" style="swimlane;html=1;startSize=20;horizontal=1;container=1;collapsible=0;rounded=1;arcSize=10;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;dashed=1;" value="Yandex Cloud (Managed by Terraform)" vertex="1">
+          <mxGeometry height="420" width="680" x="40" y="150" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="vpc" parent="cloud_zone" style="swimlane;whiteSpace=wrap;html=1;fillColor=#ffffff;" value="VPC Network" vertex="1">
+          <mxGeometry height="340" width="420" x="30" y="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="pub_sub" parent="vpc" style="swimlane;whiteSpace=wrap;html=1;dashed=1;" value="Public Subnet (DMZ)" vertex="1">
+          <mxGeometry height="280" width="160" x="20" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="nat_gw" parent="pub_sub" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" value="NAT Gateway&#xa;(Shared Egress)" vertex="1">
+          <mxGeometry height="50" width="120" x="20" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="igw" parent="pub_sub" style="shape=cloud;whiteSpace=wrap;html=1;" value="Internet Access" vertex="1">
+          <mxGeometry height="50" width="120" x="20" y="150" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="priv_sub" parent="vpc" style="swimlane;whiteSpace=wrap;html=1;dashed=1;" value="Private Subnet (App)" vertex="1">
+          <mxGeometry height="280" width="190" x="210" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="vm_airflow" parent="priv_sub" style="rounded=0;whiteSpace=wrap;html=1;" value="VM: Airflow&#xa;(standard-v3)" vertex="1">
+          <mxGeometry height="60" width="130" x="30" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="vm_clickhouse" parent="priv_sub" style="rounded=0;whiteSpace=wrap;html=1;" value="VM: ClickHouse&#xa;(standard-v3 + SSD)" vertex="1">
+          <mxGeometry height="60" width="130" x="30" y="160" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="s3_bucket" parent="cloud_zone" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#ffffff;" value="Object Storage&#xa;(S3 Compatible)" vertex="1">
+          <mxGeometry height="120" width="120" x="500" y="150" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legacy_zone" parent="1" style="swimlane;html=1;startSize=20;horizontal=1;container=1;collapsible=0;rounded=1;arcSize=10;whiteSpace=wrap;fillColor=#f8cecc;strokeColor=#b85450;dashed=1;" value="On-Premise (Manual / Existing)" vertex="1">
+          <mxGeometry height="150" width="680" x="40" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="sql_legacy" parent="legacy_zone" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" value="Legacy DWH&#xa;(SQL Server 2008)" vertex="1">
+          <mxGeometry height="70" width="140" x="200" y="50" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="edge1" edge="1" parent="1" source="sql_legacy" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="vm_airflow" value="VPN / Interconnect">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge2" edge="1" parent="1" source="vm_airflow" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="nat_gw" value="Route to Internet">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge3" edge="1" parent="1" source="vm_airflow" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_bucket" value="Access Data">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
